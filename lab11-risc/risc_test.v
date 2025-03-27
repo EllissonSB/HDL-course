@@ -31,17 +31,18 @@ module risc_test;
   reg [7:0] test;
 
   initial begin
-
+      $monitor("time=%0d: PC=%0d, halt=%b", $time, risc_inst.counter_pc.cnt_out, halt);
+      $monitor("time=%0d: opcode=%b, ld_pc=%b, pc_addr=%b phase=%b ir_addr=%b" , $time, risc_inst.opcode, risc_inst.ld_pc, risc_inst.pc_addr, risc_inst.phase,risc_inst.ir_addr);
       $display("Testing reset");
       risc_inst.memory_inst.array[0] = { HLT, 5'bx };
       reset;
       expect(0);
-
+      
       $display("Testing HLT instruction");
       risc_inst.memory_inst.array[0] = { HLT, 5'bx };
       reset;
       clock(2); expect(0); clock(1); expect(1);
-
+      
       // TO DO: TEST THE "JMP" INSTRUCTION. MEMORY LOCATIONS 0 and 1 WILL BOTH
       //        CONTAIN AN INSTRUCTION TO JUMP TO LOCATION 2. MEMORY LOCATION 2
       //        WILL CONTAIN A "HALT" INSTRUCTION. IF THE "JMP" INSTRUCTION
@@ -51,7 +52,7 @@ module risc_test;
       risc_inst.memory_inst.array[0] = { JMP, 5'd2 }; // Instrução para pular para a localização 2
       risc_inst.memory_inst.array[1] = { JMP, 5'd2 }; // Instrução para pular para a localização 2
       risc_inst.memory_inst.array[2] = { HLT, 5'bx }; // Instrução de HALT na localização 2
-
+    $display("Memoria %d %d %d", risc_inst.memory_inst.array[0], risc_inst.memory_inst.array[1], risc_inst.memory_inst.array[2]);
 	  reset;
       clock(10); expect(0); clock(1); expect(1);
 
@@ -144,7 +145,7 @@ module risc_test;
           integer clocks;
           reg [1:12*8] testfile ;
           testfile = { "CPUtest", 8'h30+test, ".txt" } ;
-          $readmemb ( testfile, risc_inst.memory_inst.array ) ;
+          $readmemb ( testfile, risc_inst.memory_inst.array) ;
           $display("Doing test %s", testfile);
           case ( test )
             1: clocks=138;
