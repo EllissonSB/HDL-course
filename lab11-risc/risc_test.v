@@ -31,8 +31,6 @@ module risc_test;
   reg [7:0] test;
 
   initial begin
-      $monitor("time=%0d: PC=%0d, halt=%b", $time, risc_inst.counter_pc.cnt_out, halt);
-      $monitor("time=%0d: opcode=%b, ld_pc=%b, pc_addr=%b phase=%b ir_addr=%b" , $time, risc_inst.opcode, risc_inst.ld_pc, risc_inst.pc_addr, risc_inst.phase,risc_inst.ir_addr);
       $display("Testing reset");
       risc_inst.memory_inst.array[0] = { HLT, 5'bx };
       reset;
