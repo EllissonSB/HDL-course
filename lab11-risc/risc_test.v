@@ -50,7 +50,6 @@ module risc_test;
       risc_inst.memory_inst.array[0] = { JMP, 5'd2 }; // Instrução para pular para a localização 2
       risc_inst.memory_inst.array[1] = { JMP, 5'd2 }; // Instrução para pular para a localização 2
       risc_inst.memory_inst.array[2] = { HLT, 5'bx }; // Instrução de HALT na localização 2
-    $display("Memoria %d %d %d", risc_inst.memory_inst.array[0], risc_inst.memory_inst.array[1], risc_inst.memory_inst.array[2]);
 	  reset;
       clock(10); expect(0); clock(1); expect(1);
 
